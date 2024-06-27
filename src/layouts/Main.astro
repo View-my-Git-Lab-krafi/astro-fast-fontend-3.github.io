@@ -1,6 +1,7 @@
 ---
 import Footer from "../components/Footer.astro"
 import NavigationBar from "../components/NavigationBar.astro"
+import ThemeToggler from "../components/ThemeToggler.astro"
 import "../styles/global.css"
 ---
 
@@ -17,11 +18,14 @@ import "../styles/global.css"
     <link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400;1,700;1,900&display=swap" rel="stylesheet">
 
     <script is:inline>
-        const DARK_THEME_CLASS = "dark";
-        const COLOUR_MODE = "COLOR_MODE"; // local memory key
-        const LIGHT_THEME = "LIGHT";
-        const DARK_THEME = "DARK";
-        
+        const THEME_CLASSES = {
+            LIGHT: "light",
+            DARK: "dark",
+            DRACULA: "dracula",
+            PEACHOFF: "peachoff"
+        };
+        const COLOUR_MODE = "COLOR_MODE"; // local storage key
+
         const rootEl = document.documentElement;
 
         // Function to get initial color mode
@@ -32,20 +36,19 @@ import "../styles/global.css"
             }
 
             if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
-                return DARK_THEME;
+                return THEME_CLASSES.DARK;
             }
-            return LIGHT_THEME;
+            return THEME_CLASSES.LIGHT;
         };
 
         // Set initial color mode based on the saved preference or system preference
         const initialColourMode = getInitialColourMode();
         
         const setInitialColourMode = (mode) => {
-            if (mode === LIGHT_THEME) {
-                rootEl.classList.remove(DARK_THEME_CLASS);
-            } else {
-                rootEl.classList.add(DARK_THEME_CLASS);
-            }
+            Object.values(THEME_CLASSES).forEach(theme => {
+                rootEl.classList.remove(theme);
+            });
+            rootEl.classList.add(mode);
         };
 
         // Set the initial color mode on page load

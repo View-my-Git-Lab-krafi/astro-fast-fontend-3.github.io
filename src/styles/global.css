@@ -1,37 +1,56 @@
-html{
+html {
     --background: white;
     --grey-200: #222222;
     --grey-400: #444444;
     --grey-600: #333333;
     --grey-900: #111111;
-    }
-html.dark{
+}
+
+html.dark {
     --background: black;
     --grey-200: #eaeaea;
     --grey-400: #acacac;
     --grey-600: #ffffff;
     --grey-900: #fafafa;
-    }
+}
 
-body{
+html.dracula {
+    --background: #282a36;
+    --grey-200: #6272a4;
+    --grey-400: #8be9fd;
+    --grey-600: #50fa7b;
+    --grey-900: #f8f8f2;
+}
+
+html.peachoff {
+    --background: #ffecd1;
+    --grey-200: #ff6f61;
+    --grey-400: #ff9a8b;
+    --grey-600: #ffbd94;
+    --grey-900: #ffc3a0;
+}
+
+body {
     font-family: "Merriweather", serif;
     font-weight: 400;
     font-style: normal;
-
     color: var(--grey-600);
     background-color: var(--background);
-  }
-h1{
+}
+
+h1 {
     font-size: 3rem;
     line-height: 1;
 }
+
 h1 + h2 {
     font-size: 1.1rem;
     margin-top: -1.4rem;
     opacity: 0.9;
     font-weight: 400;
 }
-main{
+
+main {
     max-width: 40rem;
     margin: auto;
 }
