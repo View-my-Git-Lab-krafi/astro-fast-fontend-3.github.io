@@ -1,8 +1,26 @@
+html{
+    --background: white;
+    --grey-200: #222222;
+    --grey-400: #444444;
+    --grey-600: #333333;
+    --grey-900: #111111;
+    }
+html.dark{
+    --background: black;
+    --grey-200: #eaeaea;
+    --grey-400: #acacac;
+    --grey-600: #ffffff;
+    --grey-900: #fafafa;
+    }
+
 body{
     font-family: "Merriweather", serif;
     font-weight: 400;
     font-style: normal;
-}
+
+    color: var(--grey-600);
+    background-color: var(--background);
+  }
 h1{
     font-size: 3rem;
     line-height: 1;
