@@ -15,15 +15,10 @@ import "../styles/global.css"
     <title>Astro</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400;1,700;1,900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,400;0,700;0,900&display=swap" rel="stylesheet">
 
     <script is:inline>
-        const THEME_CLASSES = {
-            LIGHT: "light",
-            DARK: "dark",
-            DRACULA: "dracula",
-            PEACHOFF: "peachoff"
-        };
+        const THEME_CLASSES = ["light", "dark", "dracula", "peachoff"];
         const COLOUR_MODE = "COLOR_MODE"; // local storage key
 
         const rootEl = document.documentElement;
@@ -36,16 +31,16 @@ import "../styles/global.css"
             }
 
             if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
-                return THEME_CLASSES.DARK;
+                return "dark";
             }
-            return THEME_CLASSES.LIGHT;
+            return "light";
         };
 
         // Set initial color mode based on the saved preference or system preference
         const initialColourMode = getInitialColourMode();
         
         const setInitialColourMode = (mode) => {
-            Object.values(THEME_CLASSES).forEach(theme => {
+            THEME_CLASSES.forEach(theme => {
                 rootEl.classList.remove(theme);
             });
             rootEl.classList.add(mode);
@@ -58,8 +53,8 @@ import "../styles/global.css"
 <body>
     <main>
         <NavigationBar />
+        <ThemeToggler />
         <slot />
-        <p>hello</p>
         <Footer />
     </main>
 </body>
