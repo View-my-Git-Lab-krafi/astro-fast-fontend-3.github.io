@@ -2,30 +2,62 @@
 import Footer from "../components/Footer.astro"
 import NavigationBar from "../components/NavigationBar.astro"
 import "../styles/global.css"
-
 ---
+
 <html lang="en">
 <head>
     <meta charset="utf-8" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width" />
     <meta name="generator" content="Astro.generator" />
-    <meta name="description" content="this is discription" />
+    <meta name="description" content="this is description" />
     <title>Astro</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400;1,700;1,900&display=swap" rel="stylesheet">
 
-</head>
-	<body>
-	<main>
-        <NavigationBar/>
-    <slot />
-    <p>hello</p>
-    
-    <Footer/>
-    </main>
-	</body>
+    <script is:inline>
+        const DARK_THEME_CLASS = "dark";
+        const COLOUR_MODE = "COLOR_MODE"; // local memory key
+        const LIGHT_THEME = "LIGHT";
+        const DARK_THEME = "DARK";
+        
+        const rootEl = document.documentElement;
 
-<!-- <style is:global></style> -->
+        // Function to get initial color mode
+        const getInitialColourMode = () => {
+            const previouslySavedColourMode = window.localStorage.getItem(COLOUR_MODE);
+            if (previouslySavedColourMode) {
+                return previouslySavedColourMode;
+            }
+
+            if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
+                return DARK_THEME;
+            }
+            return LIGHT_THEME;
+        };
+
+        // Set initial color mode based on the saved preference or system preference
+        const initialColourMode = getInitialColourMode();
+        
+        const setInitialColourMode = (mode) => {
+            if (mode === LIGHT_THEME) {
+                rootEl.classList.remove(DARK_THEME_CLASS);
+            } else {
+                rootEl.classList.add(DARK_THEME_CLASS);
+            }
+        };
+
+        // Set the initial color mode on page load
+        setInitialColourMode(initialColourMode);
+    </script>
+</head>
+<body>
+    <main>
+        <NavigationBar />
+        <slot />
+        <p>hello</p>
+        <Footer />
+    </main>
+</body>
 </html>
