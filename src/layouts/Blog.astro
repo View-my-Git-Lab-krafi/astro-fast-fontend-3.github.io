@@ -1,7 +1,40 @@
 ---
+import type { MarkdownLayoutProps } from "astro";
 import Main from "../layouts/Main.astro";
+
+type Props = MarkdownLayoutProps<{
+    title: string;
+    subtitle: string;
+    poster: string;
+}>;
+const { title, subtitle, poster } = Astro.props.frontmatter;
 ---
 
-<Main>
+<Main title="krafi.info - Blog">
+    <figure class="figure__caption">
+        <img src={poster} alt="" width="50%" height="50%" class="figure_immage"/>
+        <figcaption>
+            poster image for {title.toLowerCase()} 
+        </figcaption>    
+    </figure>
+    <h1>{title}</h1>
+    <h2>{subtitle}</h2>
+
     <slot />
 </Main>
+
+<style>
+    h1 + h2{
+        margin-bottom: 3rem;
+    }
+    .figure {
+        margin: 0;
+    }
+    .figure__image{
+        max-width: 100%;
+        border-radius: 10px;
+    }
+    .figure__caption{
+        font-size: 0.9rem;
+    }
+</style>
