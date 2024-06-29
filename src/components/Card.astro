@@ -10,7 +10,7 @@ export type Props = {
 // Destructure the props from Astro.props
 const { to, title, gradientFrom, gradientTo } = Astro.props;
 ---
-<a href={to} class="card">
+<a href={to} class="card" data-gradientfrom={gradientFrom}>
     <div class="card__inner">
         <div class="card_title">{title}</div>
         <div class="card__footer">&rarr;</div>
@@ -43,3 +43,19 @@ const { to, title, gradientFrom, gradientTo } = Astro.props;
         color: var(--grey-900);
     }
 </style>
+
+<script>
+        const card = document.querySelector('.card');
+            if (card instanceof HTMLElement) {
+                console.log(card.dataset.gradientfrom);
+            };
+
+    /* 
+    const cards = document.querySelectorAll('.card');
+    cards.forEach(card => {
+        if (card instanceof HTMLElement) {
+            console.log(card.dataset.gradientfrom);
+        }
+    });
+    */
+</script>
