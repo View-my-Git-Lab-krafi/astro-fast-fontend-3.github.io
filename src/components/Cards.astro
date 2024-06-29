@@ -1,0 +1,30 @@
+---
+// Import the Card component and the type definitions
+import Card from "./Card.astro";
+import type { Props as CardProps } from "./Card.astro";
+
+// Define the props for the Cards component
+type Props = {
+    cards: CardProps[];
+};
+
+// Destructure the cards prop from Astro.props
+const { cards } = Astro.props;
+---
+
+<div class="cards">
+    {cards.map((card) => <Card {...card} />)}
+</div>
+
+<style>
+    .cards {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+    }
+    @media screen and (min-width: 768px){
+        .cards{
+            flex-direction: row;
+        }
+    }
+</style>

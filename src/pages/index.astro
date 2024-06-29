@@ -1,10 +1,11 @@
 ---
 import Main from "../layouts/Main.astro";
+import Cards from "../components/Cards.astro"
 const profilePicture = "https://i.imgur.com/JPGFE75.jpg";
 ---
 
 <Main title="krafi.info">
-	<body>
+	<body>  
 		<div class="profile">
 			<img alt="Profile Picture" width="100px" height="100px" class="profile_pic" src="https://i.imgur.com/JPGFE75.jpg"/>
 			<div class="profile__details">
@@ -13,6 +14,27 @@ const profilePicture = "https://i.imgur.com/JPGFE75.jpg";
 				<p>abcdefg</p>
 			</div>
 		</div>	
+		<Cards cards={[
+		{
+			title: "titlethis is",
+			gradientFrom: "#818cf8",
+			gradientTo: "#d8b4fe",
+			to: "/a",
+		},
+		{
+		title: "titlethis is555555555555",
+		gradientFrom: "#fde68a",
+		gradientTo: "#fca5a5",
+		to: "/a",
+		},
+		{
+		title: "titlethis is888888888888",
+		gradientFrom: "#6ee7b7",
+		gradientTo: "#9333ea",
+		to: "/a",
+		},
+		]}
+	/>
 	</body>
 	</html>
 
