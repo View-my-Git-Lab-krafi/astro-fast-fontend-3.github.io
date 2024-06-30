@@ -5,6 +5,7 @@ const allPosts = await Astro.glob('../posts/*.md');
 const categories = [
   ...new Set(allPosts.map((post) => post.frontmatter.category)),
 ];
+
 ---
 
 <BaseLayout pageTitle={pageTitle}>
