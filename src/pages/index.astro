@@ -1,43 +1,58 @@
 ---
 import Main from "../layouts/Main.astro";
-import Cards from "../components/Cards.astro"
+import Cards from "../components/Cards.astro";
 const profilePicture = "https://i.imgur.com/JPGFE75.jpg";
 ---
 
 <Main title="krafi.info">
-	<body>  
+	<body>
 		<div class="profile">
-			<img alt="Profile Picture" width="100px" height="100px" class="profile_pic" src="https://i.imgur.com/JPGFE75.jpg"/>
+			<img alt="Profile Picture" width="100px" height="100px" class="profile_pic" src={profilePicture}/>
 			<div class="profile__details">
 				<h1>abs sdf</h1>
 				<h2>a22bs s2df</h2>
 				<p>abcdefg</p>
 			</div>
-		</div>	
+		</div>
+		
 		<Cards cards={[
-		{
-			title: "titlethis is",
-			gradientFrom: "#818cf8",
-			gradientTo: "#d8b4fe",
-			to: "/a",
-		},
-		{
-		title: "titlethis is555555555555",
-		gradientFrom: "#fde68a",
-		gradientTo: "#fca5a5",
-		to: "/a",
-		},
-		{
-		title: "titlethis is888888888888",
-		gradientFrom: "#6ee7b7",
-		gradientTo: "#9333ea",
-		to: "/a",
-		},
-		]}
-	/>
+			{
+				title: "titlethis is",
+				gradientFrom: "#818cf8",
+				gradientTo: "#d8b4fe",
+				to: "/a",
+			},
+			{
+				title: "titlethis is555555555555",
+				gradientFrom: "#fde68a",
+				gradientTo: "#fca5a5",
+				to: "/a",
+			},
+			{
+				title: "titlethis is888888888888",
+				gradientFrom: "#6ee7b7",
+				gradientTo: "#9333ea",
+				to: "/a",
+			},
+		]}/>
+		
+		<div class="featured-blog">
+			<h3 class="featured-blogs__title">Featured Blogs</h3>
+			<p class="featured-blogs__description">Opinion pieces that will change everything you know about web development.</p>
+		</div>
+		
+		<ol class="blogs">
+			<li class="blogs__list">
+				<a class="blog__link" href="a">Typescript is the new Javascript</a>
+			</li>
+			<li class="blogs__list">
+				<a class="blog__link" href="b">Why Rust is the future of Javascript tooling</a>
+			</li>
+			<li class="blogs__list">
+				<a class="blog__link" href="c">Why you should sleep more</a>
+			</li>
+		</ol>
 	</body>
-	</html>
-
 </Main>
 
 <style>
@@ -56,5 +71,34 @@ const profilePicture = "https://i.imgur.com/JPGFE75.jpg";
 	.profile_pic {
 		border-radius: 50%;
 		margin: 0 2rem 1rem 0;
+	}
+	.featured-blogs {
+		margin: 0;
+		padding: 3rem 0 0 0;
+	}
+	.featured-blogs__title {
+		font-size: 2rem;
+		color: var(--grey-900);
+	}
+	.featured-blogs__description {
+		font-size: 1rem;
+		color: var(--grey-700);
+	}
+	.blogs {
+		font-size: 1rem;
+		font-weight: 500;
+		color: var(--grey-900);
+		padding-left: 1rem;
+	}
+	.blogs__list {
+		margin-bottom: 0.5rem;
+		border-color: var(--grey-200);
+	}
+	.blog__link {
+		color: var(--grey-900);
+		text-decoration: none;
+	}
+	.blog__link:hover {
+		text-decoration: underline;
 	}
 </style>
