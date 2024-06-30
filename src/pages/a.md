@@ -1,5 +1,5 @@
 ---
-title: "thetitleaaa"
+title: "thetitle"
 layout:  ../layouts/Blog.astro
 subtitle: "this is a subtitle"
 poster: "/images/rafi.jpg"
