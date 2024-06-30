@@ -1,0 +1,37 @@
+---
+// Import global styles
+import '../styles/global.css';
+
+// Import Header and Footer components
+import Header from '../components/Header.astro';
+
+
+import Footer from '../components/Footer.astro';
+
+// Get the pageTitle prop
+const { pageTitle } = Astro.props;
+---
+
+<!-- HTML structure of the layout -->
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="generator" content={Astro.generator} />
+    <title>{pageTitle}</title>
+    <style></style>
+  </head>
+  <body>
+    <Header />
+    <main>
+      <h1>{pageTitle}</h1>
+      <!-- Slot to render the page content -->
+      <slot />
+    </main>
+    <!-- Import JavaScript file for menu -->
+    <script>
+      import '../scripts/menu.js';
+    </script>
+  </body>
+</html>
