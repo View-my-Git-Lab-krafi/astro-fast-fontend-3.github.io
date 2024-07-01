@@ -1,6 +1,8 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
+
 const pageTitle = 'Tag Index';
+const initialPageSize = 20;
 const allPosts = await Astro.glob('../posts/*.md');
 const tags = [
   ...new Set(allPosts.flatMap((post) => {
@@ -14,37 +16,56 @@ const tags = [
     }
   })),
 ];
+const initialTags = tags.slice(0, initialPageSize);
 ---
 
 <BaseLayout pageTitle={pageTitle}>
-  <div class="tags">
-    {
-      tags.map((tag) => (
-        <p class="tag">
-          <a href={`/tags/${tag}`}>{tag}</a>
-        </p>
-      ))
-    }
+  <div class="tag-list">
+    <h3>Tags</h3>
+    <ul>
+      {
+        initialTags.map((tag) => (
+          <li>
+            <a class="tag" href={`/tags/${tag}`}>{tag}</a>
+          </li>
+        ))
+      }
+    </ul>
   </div>
 </BaseLayout>
 
+<script context="defer">
+  let page = 1;
+  const pageSize = ${initialPageSize};
+  const totalTags = ${tags.length};
+  const tagsContainer = document.querySelector('.tag-list ul');
+
+  const fetchTags = async (page) => {
+    const response = await fetch(`/api/tags?page=${page}&pageSize=${pageSize}`);
+    return await response.json();
+  };
+
+  const loadMoreTags = async () => {
+    if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight) {
+      page += 1;
+      if ((page - 1) * pageSize < totalTags) {
+        const newTags = await fetchTags(page);
+        newTags.forEach(tag => {
+          const liElement = document.createElement('li');
+          const tagElement = document.createElement('a');
+          tagElement.className = 'tag';
+          tagElement.href = `/tags/${tag}`;
+          tagElement.textContent = tag;
+          liElement.appendChild(tagElement);
+          tagsContainer.appendChild(liElement);
+        });
+      }
+    }
+  };
+
+  window.addEventListener('scroll', loadMoreTags);
+</script>
+
 <style>
-a {
-  color: #00539f;
-}
 
-.tags {
-  display: flex;
-  flex-wrap: wrap;
-  margin: 0 auto;
-}
-
-.tag {
-  margin: 0.25em;
-  border: dotted 1px #a1a1a1;
-  border-radius: 0.5em;
-  padding: 0.5em 1em;
-  font-size: 1.15em;
-  background-color: #f8fcfd;
-}
 </style>

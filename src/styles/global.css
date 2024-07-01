@@ -29,6 +29,14 @@ html.peachoff {
     --grey-600: #ffbd94;
     --grey-900: #ffc3a0;
 }
+  
+html.purplegems {
+  --background: #434659 ;   /* Light background */
+  --grey-200: #bd93f9;      /* Accent color */
+  --grey-400: #50fa7b;      /* Category/Tag background */
+  --grey-600: #ff79c6;      /* Hover background */
+  --grey-900: #282a36;      /* Text color */
+}
 
 body {
     font-family: "Merriweather", serif;
@@ -63,3 +71,59 @@ li{
 li{
     margin: 1rem 0;
 }
+
+  /* Shared styles for category-list and tag-list */
+  .category-list, .tag-list {
+    background-color: #6c6f93;
+    border-radius: 6px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    margin: 20px 0;
+    overflow: hidden;
+  }
+
+  .category-list h3, .tag-list h3 {
+    color: #BD93F9;
+    font-size: 2.5rem;
+    font-weight: 900;
+    margin: 0;
+    padding: 10px;
+    text-align: center;
+    text-shadow: 1px 1px #000;
+    text-transform: uppercase;
+  }
+
+  .category-list ul, .tag-list ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+  }
+
+  .category-list li, .tag-list li {
+    display: inline-block;
+    margin: 10px;
+  }
+
+  /* Specific styles for category items */
+  .category-list .category, .tag-list .tag {
+    background-color: #50fa7b;
+    border: 4px solid #BD93F9;
+    border-radius: 20px;
+    color: #000;
+    display: inline-block;
+    font-size: 1.5rem;
+    padding: 5px 20px;
+    text-decoration: none; /* Avoid using blink as it's deprecated */
+    text-shadow: 1px 1px 0 #eee8d5;
+    transition: background-color 0.5s ease, font-size 0.3s ease, color 0.3s ease;
+    text-transform: uppercase;
+  }
+
+  /* Hover effect for category items */
+  .category-list .category:hover, .tag-list .tag:hover {
+    background-color: #5e48e7;
+    color: white;
+    text-shadow: none;
+    font-size: 1.6rem;
+    font-weight: 900;
+  }
