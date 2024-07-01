@@ -12,11 +12,11 @@ const pageTitle = 'My Astro Learning Blog';
 ---
 
 <BaseLayout pageTitle={pageTitle}>
-  <ul>
+  <div class="grid-container">
     {currentPosts.map((post) => (
-      <BlogPost url={post.url} title={post.frontmatter.title} />
+      <BlogPost url={post.url} title={post.frontmatter.title} image={post.frontmatter.image} description={post.frontmatter.description} />
     ))}
-  </ul>
+  </div>
 
   <nav aria-label="Pagination">
     <ul class="pagination">
@@ -47,50 +47,60 @@ const pageTitle = 'My Astro Learning Blog';
 </BaseLayout>
 
 <style>
-/* Container for the pagination */
-.pagination {
-  display: flex;
-  list-style-type: none;
-  padding: 0;
-  justify-content: center;
-}
+  body {
+    font-family: 'Lato', sans-serif;
+    background-color: #2C2F33;
+    margin: 0;
+    padding: 0;
+    color: #FFF;
+  }
 
-/* Individual pagination items */
-.pagination li {
-  margin: 0 5px;
-}
+  .grid-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 20px;
+    width: 90%;
+    max-width: 1200px;
+    margin: 20px auto;
+  }
 
-/* Links inside pagination items */
-.pagination a, .pagination span {
-  padding: 8px 12px;
-  text-decoration: none;
-  background-color: #0073e6;
-  color: white;
-  border-radius: 5px;
-  display: block;
-}
+  .pagination {
+    display: flex;
+    justify-content: center;
+    margin: 20px 0;
+  }
 
-/* Active page link */
-.pagination a.active {
-  background-color: #333;
-  color: white;
-  font-weight: bold;
-}
+  .pagination li {
+    list-style: none;
+    margin: 0 5px;
+  }
 
-/* Hover effect on links */
-.pagination a:hover {
-  background-color: #005bb5;
-}
+  .pagination a {
+    color: #FFF;
+    background-color: #7289DA;
+    padding: 10px 15px;
+    border-radius: 5px;
+    text-decoration: none;
+  }
 
-/* Disabled link style */
-.pagination .disabled a {
-  background-color: grey;
-  pointer-events: none;
-}
+  .pagination .active {
+    background-color: #5B6EAE;
+  }
 
-/* Ellipsis style */
-.pagination span {
-  background-color: transparent;
-  color: #333;
-}
+  .pagination .disabled a {
+    pointer-events: none;
+    opacity: 0.5;
+  }
+
+  @media (max-width: 900px) {
+    .grid-container {
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    }
+  }
+
+  @media (max-width: 600px) {
+    .grid-container {
+      grid-template-columns: 1fr;
+    }
+  }
 </style>

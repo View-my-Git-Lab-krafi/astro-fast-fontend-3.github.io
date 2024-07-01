@@ -261,3 +261,50 @@ a:hover {
   background-color: transparent;
   color: #333;
 }
+
+/* Container for the pagination */
+.pagination {
+  display: flex;
+  list-style-type: none;
+  padding: 0;
+  justify-content: center;
+}
+
+/* Individual pagination items */
+.pagination li {
+  margin: 0 5px;
+}
+
+/* Links inside pagination items */
+.pagination a, .pagination span {
+  padding: 8px 12px;
+  text-decoration: none;
+  background-color: #0073e6;
+  color: white;
+  border-radius: 5px;
+  display: block;
+}
+
+/* Active page link */
+.pagination a.active {
+  background-color: #333;
+  color: white;
+  font-weight: bold;
+}
+
+/* Hover effect on links */
+.pagination a:hover {
+  background-color: #005bb5;
+}
+
+/* Disabled link style */
+.pagination .disabled a {
+  background-color: grey;
+  pointer-events: none;
+}
+
+/* Ellipsis style */
+.pagination span {
+  background-color: transparent;
+  color: #333;
+}
