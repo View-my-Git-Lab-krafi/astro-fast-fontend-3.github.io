@@ -1,0 +1,16 @@
+---
+// Import global styles
+import '../styles/global.css';
+
+// Import Header and Footer components
+import Main from "../layouts/MainForTagCatHome.astro";
+
+
+// Get the pageTitle prop
+const { pageTitle } = Astro.props;
+---
+<Main title="krafi.info - Blog">
+      <h1>{pageTitle}</h1>
+    <slot />
+</Main>
+

@@ -2,6 +2,21 @@
 import Main from "../layouts/Main.astro";
 import Cards from "../components/Cards.astro"
 const profilePicture = "https://i.imgur.com/JPGFE75.jpg";
+
+import BaseLayout from '../layouts/BaseLayoutForHome.astro';
+const allPosts = await Astro.glob('./posts/*.md');
+const tags = [
+  ...new Set(allPosts.flatMap((post) => {
+    const tags = post.frontmatter.tags;
+    if (typeof tags === 'string') {
+      return tags.split(',').map(tag => tag.trim());
+    } else if (Array.isArray(tags)) {
+      return tags.map(tag => tag.trim());
+    } else {
+      return [];
+    }
+  })),
+];
 ---
 
 <Main title="krafi.info">
@@ -14,6 +29,29 @@ const profilePicture = "https://i.imgur.com/JPGFE75.jpg";
 				<p>abcdefg</p>
 			</div>
 		</div>	
+
+
+
+
+<BaseLayout pageTitle={"pageTitle"}>
+  <div class="tag-list">
+    <h3>Tags</h3>
+    <ul>
+      {
+        tags.map((tag) => (
+          <li class="tag">
+            <a href={`/tags/${tag}`}>{tag}</a>
+          </li>
+        )) 
+      }
+    </ul>
+  </div>
+</BaseLayout>
+
+
+
+
+
 		<Cards cards={[
 		{
 			title: "titlethis is",
