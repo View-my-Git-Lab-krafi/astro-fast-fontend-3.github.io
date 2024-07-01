@@ -3,7 +3,16 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 const pageTitle = 'Tag Index';
 const allPosts = await Astro.glob('../posts/*.md');
 const tags = [
-  ...new Set(allPosts.map((post) => post.frontmatter.tags).flat()),
+  ...new Set(allPosts.flatMap((post) => {
+    const tags = post.frontmatter.tags;
+    if (typeof tags === 'string') {
+      return tags.split(',').map(tag => tag.trim());
+    } else if (Array.isArray(tags)) {
+      return tags.map(tag => tag.trim());
+    } else {
+      return [];
+    }
+  })),
 ];
 ---
 
