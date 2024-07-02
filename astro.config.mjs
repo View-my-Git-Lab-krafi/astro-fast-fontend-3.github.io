@@ -2,8 +2,8 @@
 import { defineConfig } from 'astro/config';
 
 export default defineConfig({
-  site: 'https://<user>.gitlab.io',
-  base: '/<project-name>',
+  site: 'https://krafi.gitlab.io',
+  base: '/astro-fast-fontend-1',
   outDir: 'public',
   publicDir: 'static',
 });
