@@ -1,20 +1,10 @@
+
+
+
 ---
-const { title, url, image, description } = Astro.props;
+// Get the title and url props
+const { title, url } = Astro.props;
 ---
 
-<li class="grid-item">
-  <a href={url} class="link">
-    <div class="image-container">
-      <img src={image.url} alt={image.alt} loading="lazy" />
-    </div>
-    <div class="content">
-      <h3 class="title">{title}</h3>
-      <p class="description">{description}</p>
-      <div class="read-more">READ MORE</div>
-    </div>
-  </a>
-</li>
-
-<style>
-
-</style>
+<!-- Render a list item with a link to the blog post -->
+<li><a href={url}>{title}</a></li>
