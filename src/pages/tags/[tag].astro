@@ -2,11 +2,19 @@
 import BlogPost from '../../components/BlogPost.astro';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 
-export async function getStaticPaths() {
-  const allPosts = await Astro.glob('../posts/*.md');
+interface Post {
+  frontmatter: {
+    tags: string | string[];
+    title: string;
+  };
+  url: string;
+}
 
-  const uniqueTags = [
-    ...new Set(allPosts.flatMap((post) => {
+export async function getStaticPaths(): Promise<Array<{ params: { tag: string }; props: { posts: Post[] } }>> {
+  const allPosts: Post[] = await Astro.glob('../posts/*.md');
+
+  const uniqueTags: string[] = [
+    ...new Set(allPosts.flatMap((post: Post) => {
       const tags = post.frontmatter.tags;
       if (typeof tags === 'string') {
         return tags.split(',').map(tag => tag.trim());
@@ -18,8 +26,8 @@ export async function getStaticPaths() {
     })),
   ];
 
-  return uniqueTags.map((tag) => {
-    const filteredPosts = allPosts.filter((post) => {
+  return uniqueTags.map((tag: string) => {
+    const filteredPosts: Post[] = allPosts.filter((post: Post) => {
       const tags = post.frontmatter.tags;
       if (typeof tags === 'string') {
         return tags.split(',').map(tag => tag.trim()).includes(tag);
@@ -37,14 +45,14 @@ export async function getStaticPaths() {
 }
 
 const { tag } = Astro.params;
-const { posts } = Astro.props;
+const { posts }: { posts: Post[] } = Astro.props;
 ---
 
 <BaseLayout pageTitle={tag}>
   <p>Posts tagged with {tag}</p>
   <ul>
     {
-      posts.map((post) => (
+      posts.map((post: Post) => (
         <BlogPost url={post.url} title={post.frontmatter.title} />
       ))
     }
