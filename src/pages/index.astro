@@ -94,6 +94,9 @@ const totalPages = Math.ceil(sortedPosts.length / pageSize);
     />
 
     <BaseLayout pageTitle={pageTitlePosts}>
+		<div class="search-bar">
+			<input type="text" placeholder="Search Posts..." id="fakeSearchBar" />
+		  </div>
       <div class="grid-container">
         {currentPosts.map((post) => (
           <BlogPost url={post.url} title={post.frontmatter.title} image={post.frontmatter.image} description={post.frontmatter.description} />
@@ -147,3 +150,27 @@ const totalPages = Math.ceil(sortedPosts.length / pageSize);
     }
   </style>
 </Main>
+<script>
+	document.getElementById('fakeSearchBar').addEventListener('click', function() {
+	  window.location.href = '/blog/0';
+	});
+  </script>
+
+
+<style>
+	.search-bar {
+	  margin-bottom: 20px;
+	}
+	.search-bar input {
+	  width: 100%;
+	  padding: 10px;
+	  font-size: 16px;
+	  border: 1px solid #ccc;
+	  border-radius: 4px;
+	}
+	.grid-container {
+	  display: grid;
+	  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+	  gap: 20px;
+	}
+  </style>

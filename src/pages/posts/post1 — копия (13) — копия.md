@@ -1,6 +1,6 @@
 ---
 layout:  ../../layouts/Blog.astro
-title: My Second Blog Post
+title: vv My Second Blog Post
 author: Astro Learner
 description: "After learning some Astro, I couldn't stop!"
 image:
