@@ -1,5 +1,5 @@
 ---
-import BaseLayout from '../../components/BlogPostForTagCat.astro';
+import BaseLayout from '../../layouts/BaseLayout.astro';
 const pageTitle = 'Tag Index';
 const allPosts = await Astro.glob('../posts/*.md');
 const tags = [
@@ -17,6 +17,7 @@ const tags = [
 ---
 
 <BaseLayout pageTitle={pageTitle}>
+
   <div class="tag-list">
     <h3>Tags</h3>
     <ul>

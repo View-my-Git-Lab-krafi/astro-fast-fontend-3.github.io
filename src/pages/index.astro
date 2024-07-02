@@ -1,7 +1,7 @@
 ---
 import Main from "../layouts/Main.astro";
 import Cards from "../components/Cards.astro"
-const profilePicture = "https://i.imgur.com/JPGFE75.jpg";
+const profilePicture = "https://gitlab.com/uploads/-/system/user/avatar/8472627/avatar.png?width=800";
 
 import BaseLayout from '../layouts/BaseLayoutForHome.astro';
 const allPosts = await Astro.glob('./posts/*.md');
@@ -17,23 +17,41 @@ const tags = [
     }
   })),
 ];
+const categories = [
+  ...new Set(allPosts.map((post) => post.frontmatter.category).filter(Boolean)),
+];
 ---
 
 <Main title="krafi.info">
 	<body>  
 		<div class="profile">
-			<img alt="Profile Picture" width="100px" height="100px" class="profile_pic" src="https://i.imgur.com/JPGFE75.jpg"/>
+			<img alt="Profile Picture" width="100px" height="100px" class="profile_pic" src={profilePicture}/>
 			<div class="profile__details">
-				<h1>abs sdf</h1>
-				<h2>a22bs s2df</h2>
+				<h1>Kazi ar rafi</h1>
+				<h2>The Owner of this website.</h2>
 				<p>abcdefg</p>
 			</div>
 		</div>	
 
 
 
+		<BaseLayout>
+			<div class="category-list">
+			  <h3>Categories</h3>
+			  <ul>
+				{
+				  categories.map((category) => (
+					<li>
+					  <a class="category" href={`/categories/${category}`}>{category}</a>
+					</li>
+				  ))
+				}
+			  </ul>
+			</div>
+		  </BaseLayout>
+		  
 
-<BaseLayout pageTitle={"pageTitle"}>
+<BaseLayout pageTitle={""}>
   <div class="tag-list">
     <h3>Tags</h3>
     <ul>
@@ -75,7 +93,6 @@ const tags = [
 	/>
 	</body>
 	</html>
-
 </Main>
 
 <style>
