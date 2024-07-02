@@ -8,10 +8,10 @@ const pageSize = 9;
 const totalPages = Math.ceil(sortedPosts.length / pageSize);
 const currentPage = 1;
 const currentPosts = sortedPosts.slice(0, pageSize);
-const pageTitle = 'My Astro Learning Blog';
+const pageTitlePosts = 'All Posts';
 ---
 
-<BaseLayout pageTitle={pageTitle}>
+<BaseLayout pageTitle={pageTitlePosts}>
   <div class="grid-container">
     {currentPosts.map((post) => (
       <BlogPost url={post.url} title={post.frontmatter.title} image={post.frontmatter.image} description={post.frontmatter.description} />
@@ -45,9 +45,3 @@ const pageTitle = 'My Astro Learning Blog';
     </ul>
   </nav>
 </BaseLayout>
-
-<style>
-main {
-    max-width: 60rem;
-}
-</style>

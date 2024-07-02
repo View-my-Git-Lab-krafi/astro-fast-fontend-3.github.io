@@ -1,7 +1,8 @@
 ---
 import Main from "../layouts/Main.astro";
-import Cards from "../components/Cards.astro"
+import Cards from "../components/Cards.astro";
 const profilePicture = "https://gitlab.com/uploads/-/system/user/avatar/8472627/avatar.png?width=800";
+import BlogPost from '../components/BlogPostForBlogImageCard.astro';
 
 import BaseLayout from '../layouts/BaseLayoutForHome.astro';
 const allPosts = await Astro.glob('./posts/*.md');
@@ -20,96 +21,129 @@ const tags = [
 const categories = [
   ...new Set(allPosts.map((post) => post.frontmatter.category).filter(Boolean)),
 ];
+const pageTitlePosts = 'All Posts';
+const currentPage = 1;
+const pageSize = 9;
+const sortedPosts = allPosts.sort((a, b) => new Date(b.frontmatter.date) - new Date(a.frontmatter.date));
+const currentPosts = sortedPosts.slice(0, pageSize);
+const totalPages = Math.ceil(sortedPosts.length / pageSize);
+
 ---
 
 <Main title="krafi.info">
-	<body>  
-		<div class="profile">
-			<img alt="Profile Picture" width="100px" height="100px" class="profile_pic" src={profilePicture}/>
-			<div class="profile__details">
-				<h1>Kazi ar rafi</h1>
-				<h2>The Owner of this website.</h2>
-				<p>abcdefg</p>
-			</div>
-		</div>	
+  <body>
+    <div class="profile">
+      <img alt="Profile Picture" width="100px" height="100px" class="profile_pic" src={profilePicture}/>
+      <div class="profile__details">
+        <h1>Kazi ar rafi</h1>
+        <h2>The Owner of this website.</h2>
+        <p>abcdefg</p>
+      </div>
+    </div>
 
+    <BaseLayout>
+      <div class="category-list">
+        <h3>Categories</h3>
+        <ul>
+          {
+            categories.map((category) => (
+              <li>
+                <a class="category" href={`/categories/${category}`}>{category}</a>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+    </BaseLayout>
 
+    <BaseLayout pageTitle={""}>
+      <div class="tag-list">
+        <h3>Tags</h3>
+        <ul>
+          {
+            tags.map((tag) => (
+              <li class="tag">
+                <a href={`/tags/${tag}`}>{tag}</a>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+    </BaseLayout>
 
-		<BaseLayout>
-			<div class="category-list">
-			  <h3>Categories</h3>
-			  <ul>
-				{
-				  categories.map((category) => (
-					<li>
-					  <a class="category" href={`/categories/${category}`}>{category}</a>
-					</li>
-				  ))
-				}
-			  </ul>
-			</div>
-		  </BaseLayout>
-		  
-
-<BaseLayout pageTitle={""}>
-  <div class="tag-list">
-    <h3>Tags</h3>
-    <ul>
+    <Cards cards={[
       {
-        tags.map((tag) => (
-          <li class="tag">
-            <a href={`/tags/${tag}`}>{tag}</a>
+        title: "titlethis is",
+        gradientFrom: "#818cf8",
+        gradientTo: "#d8b4fe",
+        to: "/a",
+      },
+      {
+        title: "titlethis is555555555555",
+        gradientFrom: "#fde68a",
+        gradientTo: "#fca5a5",
+        to: "/a",
+      },
+      {
+        title: "titlethis is888888888888",
+        gradientFrom: "#6ee7b7",
+        gradientTo: "#9333ea",
+        to: "/a",
+      },
+    ]}
+    />
+
+    <BaseLayout pageTitle={pageTitlePosts}>
+      <div class="grid-container">
+        {currentPosts.map((post) => (
+          <BlogPost url={post.url} title={post.frontmatter.title} image={post.frontmatter.image} description={post.frontmatter.description} />
+        ))}
+      </div>
+
+      <nav aria-label="Pagination">
+        <ul class="pagination">
+          <li class={currentPage === 1 ? 'disabled' : ''}>
+            <a href={currentPage > 1 ? `/blog/${currentPage - 1}` : '#'}>«</a>
           </li>
-        )) 
-      }
-    </ul>
-  </div>
-</BaseLayout>
-
-
-
-
-
-		<Cards cards={[
-		{
-			title: "titlethis is",
-			gradientFrom: "#818cf8",
-			gradientTo: "#d8b4fe",
-			to: "/a",
-		},
-		{
-		title: "titlethis is555555555555",
-		gradientFrom: "#fde68a",
-		gradientTo: "#fca5a5",
-		to: "/a",
-		},
-		{
-		title: "titlethis is888888888888",
-		gradientFrom: "#6ee7b7",
-		gradientTo: "#9333ea",
-		to: "/a",
-		},
-		]}
-	/>
-	</body>
-	</html>
+          <li>
+            <a href="/blog/1" class={currentPage === 1 ? 'active' : ''}>1</a>
+          </li>
+          {currentPage > 3 && <li><span>…</span></li>}
+          {Array.from({ length: totalPages }, (_, i) => i + 1)
+            .filter(page => page > 1 && page < totalPages)
+            .slice(currentPage > 3 ? currentPage - 2 : 0, currentPage + 1)
+            .map(page => (
+              <li key={page}>
+                <a href={`/blog/${page}`} class={currentPage === page ? 'active' : ''}>{page}</a>
+              </li>
+            ))}
+          {currentPage < totalPages - 2 && <li><span>…</span></li>}
+          <li>
+            <a href={`/blog/${totalPages}`} class={currentPage === totalPages ? 'active' : ''}>{totalPages}</a>
+          </li>
+          <li class={currentPage === totalPages ? 'disabled' : ''}>
+            <a href={currentPage < totalPages ? `/blog/${currentPage + 1}` : '#'}>»</a>
+          </li>
+        </ul>
+      </nav>
+    </BaseLayout>
+  </body>
+  <style>
+    .profile {
+      display: flex;
+      align-items: flex-start;
+      flex-wrap: wrap;
+      padding: 1rem 0 3rem 0;
+    }
+    .profile__details {
+      flex: 1 0 300px;
+    }
+    .profile__details > h1 {
+      margin-top: 0;
+    }
+    .profile_pic {
+      border-radius: 50%;
+      margin: 0 2rem 1rem 0;
+    }
+  </style>
 </Main>
-
-<style>
-	.profile {
-		display: flex;
-		align-items: flex-start;
-		flex-wrap: wrap;
-		padding: 1rem 0 3rem 0;
-	}
-	.profile__details {
-		flex: 1 0 300px;
-	}
-	.profile__details > h1 {
-		margin-top: 0;
-	}
-	.profile_pic {
-		border-radius: 50%;
-		margin: 0 2rem 1rem 0;
-	}
-</style>
