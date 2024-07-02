@@ -1,12 +1,11 @@
 ---
-// /src/pages/blog/[page].astro
 import BlogPost from '../../components/BlogPost.astro';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 
 export async function getStaticPaths({ paginate }) {
   const allPosts = await Astro.glob('../../pages/posts/*.md');
   const sortedPosts = allPosts.sort((a, b) => new Date(b.frontmatter.pubDate) - new Date(a.frontmatter.pubDate));
-  return paginate(sortedPosts, { pageSize: 5, params: page => ({ pageNumber: page + 1 }) });
+  return paginate(sortedPosts, { pageSize: 9, params: page => ({ pageNumber: page + 1 }) });
 }
 
 const { page } = Astro.props;
@@ -15,19 +14,15 @@ const totalPages = page.lastPage;
 ---
 
 <BaseLayout pageTitle={'Page ' + currentPage}>
-  <div class="container">
-    <div id="grid-container" class="grid-container">
-      {page.data.map((post) => (
-        <div class="grid-item">
-          <div class="image-container">
-            <img src={post.frontmatter.image.url} alt={post.frontmatter.image.alt}>
-          </div>
-          <h3 class="title">{post.frontmatter.title}</h3>
-          <p class="description">{post.frontmatter.description}</p>
-          <a href={post.url} class="read-more">READ MORE</a>
-        </div>
-      ))}
-    </div>
+  <div class="grid-container">
+    {page.data.map((post) => (
+      <BlogPost 
+        url={post.url} 
+        title={post.frontmatter.title} 
+        image={post.frontmatter.image} 
+        description={post.frontmatter.description} 
+      />
+    ))}
   </div>
 
   <nav aria-label="Pagination">
@@ -56,6 +51,7 @@ const totalPages = page.lastPage;
       </li>
     </ul>
   </nav>
+  <p>this is page.astro</p>
 </BaseLayout>
 
 <style>

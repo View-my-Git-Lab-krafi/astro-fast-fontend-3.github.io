@@ -1,3 +1,4 @@
+/* Define theme variables */
 html {
   --background-light: white;
   --text-light: #333333;
@@ -7,6 +8,9 @@ html {
   --hover-light: #5e48e7;
   --link-light: #000000;
   --link-hover-light: #5e48e7;
+  --background-muted-light: #444;
+  --text-shadow-muted-light: #eee8d5;
+  --text-dark-color-light: #000;
 
   --background-dark: black;
   --text-dark: #ffffff;
@@ -16,6 +20,9 @@ html {
   --hover-dark: #9fffe5;
   --link-dark: #a5ecfc;
   --link-hover-dark: #6272a4;
+  --background-muted-dark: #444;
+  --text-shadow-muted-dark: #eee8d5;
+  --text-dark-color-dark: #000;
 
   --background-dracula: #282a36;
   --text-dracula: #f8f8f2;
@@ -25,15 +32,21 @@ html {
   --hover-dracula: #ff5555;
   --link-dracula: #8b38ff;
   --link-hover-dracula: #ae3077;
+  --background-muted-dracula: #444;
+  --text-shadow-muted-dracula: #eee8d5;
+  --text-dark-color-dracula: #000;
 
-  --background-peachoff: #ffecd1;    /* Light peach background */
-  --text-peachoff: #333333;          /* Dark gray text */
-  --border-peachoff: #f04333;        /* Coral border */
-  --accent-peachoff: #ff9a8b;        /* Light coral accent */
-  --highlight-peachoff: #ff6f61;     /* Coral highlight */
-  --hover-peachoff: #ff7f50;         /* Darker coral hover state */
-  --link-peachoff: #0066cc;          /* Blue link */
-  --link-hover-peachoff: #eef6ff;    /* Darker blue link hover */
+  --background-peachoff: #ffecd1;
+  --text-peachoff: #333333;
+  --border-peachoff: #f04333;
+  --accent-peachoff: #ff9a8b;
+  --highlight-peachoff: #ff6f61;
+  --hover-peachoff: #ff7f50;
+  --link-peachoff: #0066cc;
+  --link-hover-peachoff: #eef6ff;
+  --background-muted-peachoff: #444;
+  --text-shadow-muted-peachoff: #eee8d5;
+  --text-dark-color-peachoff: #000;
 
   --background-purplegems: #f8f8f2;
   --text-purplegems: #282a36;
@@ -43,6 +56,9 @@ html {
   --hover-purplegems: #50fa7b;
   --link-purplegems: #6272a4;
   --link-hover-purplegems: #ff5555;
+  --background-muted-purplegems: #444;
+  --text-shadow-muted-purplegems: #eee8d5;
+  --text-dark-color-purplegems: #000;
 
   --border-radius: 6px;
   --box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
@@ -57,6 +73,9 @@ html.light {
   --hover: var(--hover-light);
   --link-color: var(--link-light);
   --link-hover-color: var(--link-hover-light);
+  --background-muted: var(--background-muted-light);
+  --text-shadow-muted: var(--text-shadow-muted-light);
+  --text-dark-color: var(--text-dark-color-light);
 }
 
 html.dark {
@@ -68,6 +87,9 @@ html.dark {
   --hover: var(--hover-dark);
   --link-color: var(--link-dark);
   --link-hover-color: var(--link-hover-dark);
+  --background-muted: var(--background-muted-dark);
+  --text-shadow-muted: var(--text-shadow-muted-dark);
+  --text-dark-color: var(--text-dark-color-dark);
 }
 
 html.dracula {
@@ -79,6 +101,9 @@ html.dracula {
   --hover: var(--hover-dracula);
   --link-color: var(--link-dracula);
   --link-hover-color: var(--link-hover-dracula);
+  --background-muted: var(--background-muted-dracula);
+  --text-shadow-muted: var(--text-shadow-muted-dracula);
+  --text-dark-color: var(--text-dark-color-dracula);
 }
 
 html.peachoff {
@@ -90,6 +115,9 @@ html.peachoff {
   --hover: var(--hover-peachoff);
   --link-color: var(--link-peachoff);
   --link-hover-color: var(--link-hover-peachoff);
+  --background-muted: var(--background-muted-peachoff);
+  --text-shadow-muted: var(--text-shadow-muted-peachoff);
+  --text-dark-color: var(--text-dark-color-peachoff);
 }
 
 html.purplegems {
@@ -101,8 +129,12 @@ html.purplegems {
   --hover: var(--hover-purplegems);
   --link-color: var(--link-purplegems);
   --link-hover-color: var(--link-hover-purplegems);
+  --background-muted: var(--background-muted-purplegems);
+  --text-shadow-muted: var(--text-shadow-muted-purplegems);
+  --text-dark-color: var(--text-dark-color-purplegems);
 }
 
+/* Apply theme variables */
 body {
   font-family: "Merriweather", serif;
   font-weight: 400;
@@ -115,6 +147,7 @@ body {
 h1 {
   font-size: 3rem;
   line-height: 1;
+  color: var(--text-color);
 }
 
 h1 + h2 {
@@ -122,6 +155,7 @@ h1 + h2 {
   margin-top: -1.4rem;
   opacity: 0.9;
   font-weight: 400;
+  color: var(--text-color);
 }
 
 main {
@@ -149,7 +183,6 @@ a:hover {
   color: var(--link-hover-color);
 }
 
-/* Shared styles for category-list and tag-list */
 .category-list, .tag-list {
   background-color: var(--border-color);
   border-radius: var(--border-radius);
@@ -165,7 +198,7 @@ a:hover {
   margin: 0;
   padding: 10px;
   text-align: center;
-  text-shadow: 1px 1px #000;
+  text-shadow: 1px 1px var(--text-shadow-muted);
   text-transform: uppercase;
 }
 
@@ -185,11 +218,11 @@ a:hover {
   background-color: var(--accent);
   border: 4px solid var(--highlight);
   border-radius: 20px;
-  color: #000;
+  color: var(--text-dark-color);
   display: inline-block;
   font-size: 1.5rem;
   padding: 5px 20px;
-  text-shadow: 1px 1px 0 #eee8d5;
+  text-shadow: 1px 1px 0 var(--text-shadow-muted);
   transition: background-color 0.5s ease, font-size 0.3s ease, color 0.3s ease;
   text-transform: uppercase;
 }
@@ -207,14 +240,6 @@ a:hover {
   text-decoration: none;
 }
 
-
-
-
-
-
-
-
-
 /* Container for the pagination */
 .pagination {
   display: flex;
@@ -223,12 +248,10 @@ a:hover {
   justify-content: center;
 }
 
-/* Individual pagination items */
 .pagination li {
   margin: 0 5px;
 }
 
-/* Links inside pagination items */
 .pagination a, .pagination span {
   padding: 8px 12px;
   text-decoration: none;
@@ -238,31 +261,26 @@ a:hover {
   display: block;
 }
 
-/* Active page link */
 .pagination a.active {
   background-color: #333;
   color: white;
   font-weight: bold;
 }
 
-/* Hover effect on links */
 .pagination a:hover {
   background-color: #005bb5;
 }
 
-/* Disabled link style */
 .pagination .disabled a {
   background-color: grey;
   pointer-events: none;
 }
 
-/* Ellipsis style */
 .pagination span {
   background-color: transparent;
   color: #333;
 }
 
-/* Container for the pagination */
 .pagination {
   display: flex;
   list-style-type: none;
@@ -270,12 +288,10 @@ a:hover {
   justify-content: center;
 }
 
-/* Individual pagination items */
 .pagination li {
   margin: 0 5px;
 }
 
-/* Links inside pagination items */
 .pagination a, .pagination span {
   padding: 8px 12px;
   text-decoration: none;
@@ -285,25 +301,21 @@ a:hover {
   display: block;
 }
 
-/* Active page link */
 .pagination a.active {
   background-color: #333;
   color: white;
   font-weight: bold;
 }
 
-/* Hover effect on links */
 .pagination a:hover {
   background-color: #005bb5;
 }
 
-/* Disabled link style */
 .pagination .disabled a {
   background-color: grey;
   pointer-events: none;
 }
 
-/* Ellipsis style */
 .pagination span {
   background-color: transparent;
   color: #333;
@@ -311,6 +323,7 @@ a:hover {
 
 
 
+/* blog pagination css */
 body {
   font-family: 'Lato', sans-serif;
   background-color: #2C2F33;
@@ -323,7 +336,7 @@ body {
   display: grid;
   gap: 20px;
   width: 90%;
-  max-width: 60rem; /* Updated max-width to 60rem */
+  max-width: 60rem; 
   margin: 20px auto;
 }
 
@@ -447,3 +460,93 @@ body {
 .read-more:hover {
   background-color: #5B6EAE;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.grid-item {
+  background-color: #23272A;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.grid-item:hover {
+  transform: translateY(-10px);
+}
+
+.link {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  text-decoration: none;
+  color: inherit;
+}
+
+.image-container {
+  width: 100%;
+  height: 150px;
+  background-color: #444;
+  overflow: hidden;
+}
+
+.image-container img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.content {
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+.title {
+  font-size: 1.4em;
+  margin-bottom: 10px;
+  color: #FFCC00;
+}
+
+.description {
+  font-size: 1em;
+  margin-bottom: 15px;
+  color: #E6E6E6;
+  flex-grow: 1;
+}
+
+.read-more {
+  background-color: #7289DA;
+  color: #FFF;
+  padding: 10px;
+  text-align: center;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+}
+
+.read-more:hover {
+  background-color: #5B6EAE;
+} use theme everywhere .
