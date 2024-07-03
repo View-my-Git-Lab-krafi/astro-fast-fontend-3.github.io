@@ -18,7 +18,7 @@ interface Page {
 }
 
 export async function getStaticPaths({ paginate }: { paginate: any }): Promise<Array<{ params: { pageNumber: number }; props: { page: Page } }>> {
-  const allPosts: Post[] = await Astro.glob('../../pages/posts/*.md');
+  const allPosts: any[] = await Astro.glob('../../pages/posts/*.md');
   return paginate(allPosts, { pageSize: 9, params: (page: number) => ({ pageNumber: page + 1 }) });
 }
 
@@ -57,7 +57,7 @@ const totalPages = page.lastPage;
       </li>
     </ul>
   </nav>
-  <p>this is page.astro</p>
+  <p>This is page.astro</p>
 </BaseLayout>
 
 <style>
