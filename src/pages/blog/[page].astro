@@ -9,7 +9,7 @@ const sortedPosts = allPosts.sort((a, b) => {
   return dateB - dateA;
 });
 
-const postsPerPage = 5; // Define how many posts you want per page
+const postsPerPage = 9; // Define how many posts you want per page
 const currentPage = Astro.params.page ? parseInt(Astro.params.page) : 1;
 const totalPages = Math.ceil(sortedPosts.length / postsPerPage);
 const paginatedPosts = sortedPosts.slice((currentPage - 1) * postsPerPage, currentPage * postsPerPage);
