@@ -2,19 +2,11 @@
 import BlogPost from '../../components/BlogPost.astro';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 
-interface Post {
-  frontmatter: {
-    tags: string | string[];
-    title: string;
-  };
-  url: string;
-}
-
 export async function getStaticPaths() {
-  const allPosts: any[] = await Astro.glob('../posts/*.md');
+  const allPosts = await Astro.glob('../posts/*.md');
 
-  const uniqueTags: string[] = [
-    ...new Set(allPosts.flatMap((post: Post) => {
+  const uniqueTags = [
+    ...new Set(allPosts.flatMap((post) => {
       const tags = post.frontmatter.tags;
       if (typeof tags === 'string') {
         return tags.split(',').map(tag => tag.trim());
@@ -26,8 +18,8 @@ export async function getStaticPaths() {
     })),
   ];
 
-  return uniqueTags.map((tag: string) => {
-    const filteredPosts: Post[] = allPosts.filter((post: Post) => {
+  return uniqueTags.map((tag) => {
+    const filteredPosts = allPosts.filter((post) => {
       const tags = post.frontmatter.tags;
       if (typeof tags === 'string') {
         return tags.split(',').map(tag => tag.trim()).includes(tag);
@@ -43,13 +35,18 @@ export async function getStaticPaths() {
     };
   });
 }
+
+const { tag } = Astro.params;
+const { posts } = Astro.props;
 ---
 
-<BaseLayout pageTitle={Astro.params.tag}>
-  <p>Posts tagged with {Astro.params.tag}</p>
+<BaseLayout pageTitle={tag}>
+  <p>Posts tagged with {tag}</p>
   <ul>
-    {Astro.props.posts.map((post: Post) => (
-      <BlogPost url={post.url} title={post.frontmatter.title} />
-    ))}
+    {
+      posts.map((post) => (
+        <BlogPost url={post.url} title={post.frontmatter.title} />
+      ))
+    }
   </ul>
 </BaseLayout>
