@@ -6,7 +6,7 @@ import netlify from "@astrojs/netlify";
 //export default defineConfig({}); 
 
 //If you are using netlify
-export default defineConfig({ site: 'http://localhost',output: "server", adapter: netlify() });
+export default defineConfig({ site: 'https://fast-fontend-1.netlify.app', output: "server", adapter: netlify() });
 
 
 
