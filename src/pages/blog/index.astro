@@ -3,45 +3,50 @@ import BlogPost from '../../components/BlogPostForBlogImageCard.astro';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 
 const allPosts = await Astro.glob('../../pages/posts/*.md');
-const sortedPosts = allPosts.sort((a, b) => new Date(b.frontmatter.date) - new Date(a.frontmatter.date));
+//const sortedPosts = allPosts.sort((a, b) => new Date(b.frontmatter.date) - new Date(a.frontmatter.date));
+const sortedPosts = allPosts.sort((a, b) => {
+  const dateA = new Date(a.frontmatter.date) as any as number;
+  const dateB = new Date(b.frontmatter.date) as any as number;
+  return dateB - dateA;
+});
+
 const pageSize = 9;
 const totalPages = Math.ceil(sortedPosts.length / pageSize);
 const currentPage = 1;
 const currentPosts = sortedPosts.slice(0, pageSize);
-const pageTitlePosts = 'All Posts';
+//const pageTitle = 'My Astro Learning Blog';
 ---
 
-<BaseLayout pageTitle={pageTitlePosts}>
-  <div class="grid-container">
-    {currentPosts.map((post) => (
-      <BlogPost url={post.url} title={post.frontmatter.title} image={post.frontmatter.image} description={post.frontmatter.description} />
-    ))}
-  </div>
+<nav aria-label="Pagination">
+  <ul class="pagination">
+    <li class={currentPage === 1 ? 'disabled' : ''}>
+      <a href={currentPage > 1 ? `/blog/${currentPage - 1}` : '#'}>«</a>
+    </li>
+    <li>
+      <a href="/blog/1" class={currentPage === 1 ? 'active' : ''}>1</a>
+    </li>
+    {currentPage > 3 && <li><span>…</span></li>}
+    {Array.from({ length: totalPages }, (_, i) => i + 1)
+      .filter(page => page > 1 && page < totalPages)
+      .slice(currentPage > 3 ? currentPage - 2 : 0, currentPage + 1)
+      .map(page => (
+        <li>
+          <a href={`/blog/${page}`} class={currentPage === page ? 'active' : ''}>{page}</a>
+        </li>
+      ))}
+    {currentPage < totalPages - 2 && <li><span>…</span></li>}
+    <li>
+      <a href={`/blog/${totalPages}`} class={currentPage === totalPages ? 'active' : ''}>{totalPages}</a>
+    </li>
+    <li class={currentPage === totalPages ? 'disabled' : ''}>
+      <a href={currentPage < totalPages ? `/blog/${currentPage + 1}` : '#'}>»</a>
+    </li>
+  </ul>
+</nav>
 
-  <nav aria-label="Pagination">
-    <ul class="pagination">
-      <li class={currentPage === 1 ? 'disabled' : ''}>
-        <a href={currentPage > 1 ? `/blog/${currentPage - 1}` : '#'}>«</a>
-      </li>
-      <li>
-        <a href="/blog/1" class={currentPage === 1 ? 'active' : ''}>1</a>
-      </li>
-      {currentPage > 3 && <li><span>…</span></li>}
-      {Array.from({ length: totalPages }, (_, i) => i + 1)
-        .filter(page => page > 1 && page < totalPages)
-        .slice(currentPage > 3 ? currentPage - 2 : 0, currentPage + 1)
-        .map(page => (
-          <li key={page}>
-            <a href={`/blog/${page}`} class={currentPage === page ? 'active' : ''}>{page}</a>
-          </li>
-        ))}
-      {currentPage < totalPages - 2 && <li><span>…</span></li>}
-      <li>
-        <a href={`/blog/${totalPages}`} class={currentPage === totalPages ? 'active' : ''}>{totalPages}</a>
-      </li>
-      <li class={currentPage === totalPages ? 'disabled' : ''}>
-        <a href={currentPage < totalPages ? `/blog/${currentPage + 1}` : '#'}>»</a>
-      </li>
-    </ul>
-  </nav>
-</BaseLayout>
+
+<style>
+main {
+    max-width: 60rem;
+}
+</style>
