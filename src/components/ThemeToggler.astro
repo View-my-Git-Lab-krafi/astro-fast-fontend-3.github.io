@@ -89,7 +89,7 @@
             <button aria-label="Toggle to Dark Theme" data-theme="dark">Dark</button>
             <button aria-label="Toggle to Dracula Theme" data-theme="dracula">Dracula</button>
             <button aria-label="Toggle to Peachoff Theme" data-theme="peachoff">Peachoff</button>
-            <button aria-label="Toggle to PurpleGems Theme" data-theme="purplegems">Purplegems</button>
+            <button aria-label="Toggle to PurpleGems Theme" data-theme="purplegems">purplegems</button>
         </div>
     </div>
 
@@ -98,8 +98,7 @@
             LIGHT: "light",
             DARK: "dark",
             DRACULA: "dracula",
-            PEACHOFF: "peachoff",
-            PURPLEGEMS: "purplegems"
+            PEACHOFF: "peachoff"
         };
         const COLOUR_MODE = "COLOR_MODE"; // local storage key
 
@@ -110,24 +109,20 @@
         // Add event listeners to each button in the dropdown
         dropdownButtons.forEach(button => {
             button.addEventListener('click', () => {
-                const selectedTheme = button.getAttribute('data-theme')!;
-                if (themeButton) {
-                    rootEl.className = selectedTheme; // Change theme
-                    themeButton.textContent = `Theme: ${button.textContent}`; // Update button text
+                const selectedTheme = button.getAttribute('data-theme');
+                rootEl.className = selectedTheme; // Change theme
+                themeButton.textContent = `Theme: ${button.textContent}`; // Update button text
 
-                    // Save the current color mode to local storage
-                    window.localStorage.setItem(COLOUR_MODE, selectedTheme);
-                }
+                // Save the current color mode to local storage
+                window.localStorage.setItem(COLOUR_MODE, selectedTheme);
             });
         });
 
         // Load saved theme from local storage
         const savedTheme = window.localStorage.getItem(COLOUR_MODE);
-        if (savedTheme && THEME_CLASSES[savedTheme.toUpperCase() as keyof typeof THEME_CLASSES]) {
+        if (savedTheme && THEME_CLASSES[savedTheme.toUpperCase()]) {
             rootEl.className = savedTheme;
-            if (themeButton) {
-                themeButton.textContent = `Theme: ${savedTheme.charAt(0).toUpperCase() + savedTheme.slice(1)}`;
-            }
+            themeButton.textContent = `Theme: ${savedTheme.charAt(0).toUpperCase() + savedTheme.slice(1)}`;
         }
     </script>
 </body>

@@ -24,12 +24,7 @@ const categories = [
 const pageTitlePosts = 'All Posts';
 const currentPage = 1;
 const pageSize = 9;
-const sortedPosts = allPosts.sort((a, b) => {
-  const dateA = new Date(a.frontmatter.date).getTime();
-  const dateB = new Date(b.frontmatter.date).getTime();
-  return dateB - dateA;
-});
-
+const sortedPosts = allPosts.sort((a, b) => new Date(b.frontmatter.date) - new Date(a.frontmatter.date));
 const currentPosts = sortedPosts.slice(0, pageSize);
 const totalPages = Math.ceil(sortedPosts.length / pageSize);
 
@@ -121,10 +116,9 @@ const totalPages = Math.ceil(sortedPosts.length / pageSize);
             .filter(page => page > 1 && page < totalPages)
             .slice(currentPage > 3 ? currentPage - 2 : 0, currentPage + 1)
             .map(page => (
-			<li>
-			<a href={`/blog/${page}`} class={currentPage === page ? 'active' : ''}>{page}</a>
-			</li>
-
+              <li key={page}>
+                <a href={`/blog/${page}`} class={currentPage === page ? 'active' : ''}>{page}</a>
+              </li>
             ))}
           {currentPage < totalPages - 2 && <li><span>…</span></li>}
           <li>
@@ -157,14 +151,10 @@ const totalPages = Math.ceil(sortedPosts.length / pageSize);
   </style>
 </Main>
 <script>
-	const searchBar = document.getElementById('fakeSearchBar');
-	if (searchBar) {
-	  searchBar.addEventListener('click', function() {
-		window.location.href = '/blog/0';
-	  });
-	}
+	document.getElementById('fakeSearchBar').addEventListener('click', function() {
+	  window.location.href = '/blog/0';
+	});
   </script>
-  
 
 
 <style>
