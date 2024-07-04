@@ -1,0 +1,30 @@
+import { paginateTags } from '../../utils/paginateTags';
+
+export async function get(context) {
+  const { request } = context;
+  const url = new URL(request.url);
+  const page = parseInt(url.searchParams.get('page') || '1', 10);
+  const pageSize = parseInt(url.searchParams.get('pageSize') || '20', 10);
+
+  const allPosts = await Astro.glob('../../posts/*.md');
+  const tags = [
+    ...new Set(allPosts.flatMap((post) => {
+      const tags = post.frontmatter.tags;
+      if (typeof tags === 'string') {
+        return tags.split(',').map(tag => tag.trim());
+      } else if (Array.isArray(tags)) {
+        return tags.map(tag => tag.trim());
+      } else {
+        return [];
+      }
+    })),
+  ];
+
+  const paginatedTags = paginateTags(tags, page, pageSize);
+
+  return new Response(JSON.stringify(paginatedTags), {
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  });
+}
