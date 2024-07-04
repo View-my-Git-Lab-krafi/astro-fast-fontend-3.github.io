@@ -3,7 +3,11 @@ import BlogPost from '../../components/BlogPostForBlogImageCard.astro';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 
 const allPosts = await Astro.glob('../../pages/posts/*.md');
-const sortedPosts = allPosts.sort((a, b) => new Date(b.frontmatter.date) - new Date(a.frontmatter.date));
+const sortedPosts = allPosts.sort((a, b) => {
+  const dateA = new Date(a.frontmatter.date).getTime();
+  const dateB = new Date(b.frontmatter.date).getTime();
+  return dateB - dateA;
+});
 const pageTitlePosts = 'All Posts you can search';
 ---
 
@@ -18,39 +22,46 @@ const pageTitlePosts = 'All Posts you can search';
 
   <script>
     function filterPosts() {
-      const query = document.getElementById('searchBar').value.toLowerCase();
+      const searchBar = document.getElementById('searchBar') as HTMLInputElement;
+      const query = searchBar?.value.toLowerCase() || '';
       const posts = document.querySelectorAll('.grid-item');
 
       posts.forEach(post => {
-        const title = post.querySelector('.title').textContent.toLowerCase();
-        post.style.display = title.includes(query) ? 'block' : 'none';
+        const titleElement = post.querySelector('.title');
+        if (titleElement) {
+          const title = titleElement.textContent ? titleElement.textContent.toLowerCase() : '';
+          (post as HTMLElement).style.display = title.includes(query) ? 'block' : 'none';
+        }
       });
     }
 
-    document.getElementById('searchBar').addEventListener('input', filterPosts);
+    const searchBar = document.getElementById('searchBar') as HTMLInputElement;
+    if (searchBar) {
+      searchBar.addEventListener('input', filterPosts);
+    }
   </script>
 </BaseLayout>
+
 <style>
   .search-bar {
-  width: 100%;
-  padding: 15px;
-  font-size: 18px;
-  border: 2px solid #ccc;
-  border-radius: 25px;
-  margin-bottom: 20px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-  transition: border-color 0.3s, box-shadow 0.3s;
-}
+    width: 100%;
+    padding: 15px;
+    font-size: 18px;
+    border: 2px solid #ccc;
+    border-radius: 25px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    transition: border-color 0.3s, box-shadow 0.3s;
+  }
 
-.search-bar:focus {
-  border-color: #007BFF;
-  box-shadow: 0 0 8px rgba(0, 123, 255, 0.25);
-}
+  .search-bar:focus {
+    border-color: #007BFF;
+    box-shadow: 0 0 8px rgba(0, 123, 255, 0.25);
+  }
 
-.grid-container {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 20px;
-}
-
+  .grid-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+  }
 </style>
