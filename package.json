@@ -13,10 +13,9 @@
     "@astrojs/check": "^0.7.0",
     "@astrojs/netlify": "^5.3.5",
     "astro": "^4.11.0",
-    "title-case": "^4.3.1"
-  },
-  "devDependencies": {
+    "title-case": "^4.3.1",
     "@types/node": "^20.14.9",
     "typescript": "^5.5.3"
   }
+
 }
