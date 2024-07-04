@@ -1,20 +1,6 @@
 ---
 import BaseLayout from './BaseLayout.astro';
-
-interface Frontmatter {
-  title: string;
-  description: string;
-  pubDate: string;
-  author: string;
-  image: {
-    url: string;
-    alt: string;
-  };
-  tags: string[];
-}
-const frontmatter: Frontmatter = Astro.props?.frontmatter;
-//const frontmatter: Frontmatter = Astro.props?.frontmatter;
-//const { frontmatter }: { frontmatter: Frontmatter } = Astro.props;
+const { frontmatter } = Astro.props;
 ---
 
 <BaseLayout pageTitle={frontmatter.title}>
@@ -31,7 +17,7 @@ const frontmatter: Frontmatter = Astro.props?.frontmatter;
 
   <div class="tags">
     {
-      frontmatter.tags.map((tag: string) => (
+      frontmatter.tags.map((tag) => (
         <p class="tag">
           <a href={`/tags/${tag}`}>{tag}</a>
         </p>
@@ -41,7 +27,6 @@ const frontmatter: Frontmatter = Astro.props?.frontmatter;
 
   <slot />
 </BaseLayout>
-
 <style>
   a {
     color: #00539f;
