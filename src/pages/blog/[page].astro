@@ -2,29 +2,42 @@
 import BlogPost from '../../components/BlogPostForBlogImageCard.astro';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 
-const allPosts = await Astro.glob('../../pages/posts/*.md');
-const sortedPosts = allPosts.sort((a, b) => {
-  const dateA = new Date(a.frontmatter.date).getTime();
-  const dateB = new Date(b.frontmatter.date).getTime();
-  return dateB - dateA;
-});
+interface Post {
+  url: string;
+  frontmatter: {
+    title: string;
+    image: string;
+    description: string;
+    pubDate: string;
+  };
+}
 
-const postsPerPage = 9; // Define how many posts you want per page
-const currentPage = Astro.params.page ? parseInt(Astro.params.page) : 1;
-const totalPages = Math.ceil(sortedPosts.length / postsPerPage);
-const paginatedPosts = sortedPosts.slice((currentPage - 1) * postsPerPage, currentPage * postsPerPage);
+interface Pagination {
+  currentPage: number;
+  lastPage: number;
+  data: Post[];
+}
 
-const pageTitlePosts = 'All Posts';
+export async function getStaticPaths({ paginate }: { paginate: (items: Post[], options: { pageSize: number, params: (page: number) => { pageNumber: number } }) => any }): Promise<any> {
+  const allPosts: Post[] = await Astro.glob('../../pages/posts/*.md');
+  const sortedPosts: Post[] = allPosts.sort((a, b) => new Date(b.frontmatter.pubDate).getTime() - new Date(a.frontmatter.pubDate).getTime());
+  return paginate(sortedPosts, { pageSize: 9, params: (page: number) => ({ pageNumber: page + 1 }) });
+}
+
+const { page }: { page: Pagination } = Astro.props;
+const currentPage = page.currentPage;
+const totalPages = page.lastPage;
 ---
 
-<BaseLayout pageTitle={pageTitlePosts}>
-  <div class="search-bar">
-    <input type="text" placeholder="Search Posts..." id="fakeSearchBar" />
-  </div>
-
-  <div class="grid-container" id="postsContainer">
-    {paginatedPosts.map((post) => (
-      <BlogPost url={post.url} title={post.frontmatter.title} image={post.frontmatter.image} description={post.frontmatter.description} />
+<BaseLayout pageTitle={'Page ' + currentPage}>
+  <div class="grid-container">
+    {page.data.map((post) => (
+      <BlogPost 
+        url={post.url} 
+        title={post.frontmatter.title} 
+        image={post.frontmatter.image} 
+        description={post.frontmatter.description} 
+      />
     ))}
   </div>
 
@@ -41,9 +54,11 @@ const pageTitlePosts = 'All Posts';
         .filter(page => page > 1 && page < totalPages)
         .slice(currentPage > 3 ? currentPage - 2 : 0, currentPage + 1)
         .map(page => (
-          <li>
-            <a href={`/blog/${page}`} class={currentPage === page ? 'active' : ''}>{page}</a>
-          </li>
+          <>
+            <li key={page}>
+              <a href={`/blog/${page}`} class={currentPage === page ? 'active' : ''}>{page}</a>
+            </li>
+          </>
         ))}
       {currentPage < totalPages - 2 && <li><span>…</span></li>}
       <li>
@@ -54,62 +69,11 @@ const pageTitlePosts = 'All Posts';
       </li>
     </ul>
   </nav>
-
-  <script>
-    const searchBar = document.getElementById('fakeSearchBar');
-    if (searchBar) {
-      searchBar.addEventListener('click', function() {
-        window.location.href = '/blog/0';
-      });
-    }
-  </script>
+  <p>this is page.astro</p>
 </BaseLayout>
 
 <style>
-  .search-bar {
-    margin-bottom: 20px;
-  }
-
-  .search-bar input {
-    width: 100%;
-    padding: 10px;
-    font-size: 16px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-  }
-
-  .grid-container {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-    gap: 20px;
-  }
-
-  .pagination {
-    display: flex;
-    justify-content: center;
-    list-style: none;
-    padding: 0;
-  }
-
-  .pagination li {
-    margin: 0 5px;
-  }
-
-  .pagination a {
-    padding: 10px 15px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    text-decoration: none;
-    color: #007BFF;
-  }
-
-  .pagination a.active {
-    background-color: #007BFF;
-    color: #fff;
-  }
-
-  .pagination li.disabled a {
-    color: #aaa;
-    pointer-events: none;
-  }
+main {
+  max-width: 60rem;
+}
 </style>
