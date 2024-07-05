@@ -18,30 +18,29 @@ interface CategoryProps {
 }
 
 export async function getStaticPaths() {
-  const allPosts: any[] = await Astro.glob('../posts/*.md'); // Adjust any[] with the correct type for allPosts
+  const allPosts = await Astro.glob('../posts/*.md');
 
-  const uniqueCategories: string[] = [
+  // Extract unique categories as strings
+  const uniqueCategories = [
     ...new Set(allPosts.map((post) => post.frontmatter.category).filter(Boolean)),
   ];
 
+  // Return the unique categories for generating static paths
   return uniqueCategories.map((category) => ({
-    params: { category },
+    params: { category: category.toString() },
+    props: { posts: allPosts.filter((post) => post.frontmatter.category === category) },
   }));
 }
 
-const { category } = Astro.params as CategoryParams;
-const { posts } = Astro.props as CategoryProps;
+const { category } = Astro.params;
+const { posts } = Astro.props;
 ---
 
 <BaseLayout pageTitle={category}>
   <p>Posts in the {category} category</p>
   <ul>
-    {posts && posts.length > 0 ? (
-      posts.map((post) => (
-        <BlogPost key={post.url} url={post.url} title={post.frontmatter.title} />
-      ))
-    ) : (
-      <li>No posts found</li>
-    )}
+    {posts.map((post) => (
+      <BlogPost url={post.url} title={post.frontmatter.title} />
+    ))}
   </ul>
 </BaseLayout>
